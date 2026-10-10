@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>代付帳 · 請款卡</title>
+<!--
+  代付帳 / Owely 1.4 請款卡落地頁。零伺服器：請款內容在 URL 的 #fragment 裡，GitHub Pages 收不到。
+  部署位置：Xun88888/owely-legal 的 r/index.html（https://xun88888.github.io/owely-legal/r/）。
+  payload = base64url(JSON)。t = "req"（請款）或 "ack"（回執）。
+-->
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#F5F1E8;--card:#fff;--line:#E9E2D0;--ink:#242B26;--ink2:#6F7871;--emerald:#0E6B4E;--emerald-hi:#128763;--emerald-soft:#E4EFE8;--verm:#BC4437;--gold:#A8843F;--gold-line:#D8C089}
+@media (prefers-color-scheme:dark){:root{--bg:#0E1512;--card:#171F1B;--line:#26322B;--ink:#E9EFE9;--ink2:#9AA69E;--emerald:#41C494;--emerald-hi:#55D6A6;--emerald-soft:#143127;--verm:#E0715F;--gold:#D3AC62;--gold-line:#8A7340}}
+body{font-family:-apple-system,"PingFang TC","Hiragino Sans","Noto Sans CJK TC",sans-serif;background:var(--bg);color:var(--ink);padding:18px 16px 40px;max-width:430px;margin:0 auto;line-height:1.5}
+.lang{display:flex;gap:6px;justify-content:flex-end;margin-bottom:10px}
+.lang button{font:inherit;font-size:12px;padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.lang button.on{background:var(--emerald);color:#fff;border-color:var(--emerald)}
+.card{border-radius:26px;position:relative;overflow:hidden;color:#F2EFE4;background:linear-gradient(155deg,#117657,#0B5540 55%,#084232);padding:22px 24px;min-height:300px;display:flex;flex-direction:column;box-shadow:0 18px 40px rgba(0,0,0,.22)}
+.card::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(255,255,255,.028) 0 2px,transparent 2px 7px),repeating-linear-gradient(-45deg,rgba(255,255,255,.022) 0 2px,transparent 2px 7px);pointer-events:none}
+.card::after{content:"";position:absolute;inset:10px;border:1.5px dashed rgba(222,193,122,.45);border-radius:18px;pointer-events:none}
+.brand{display:flex;justify-content:space-between;align-items:center;font-size:11px;letter-spacing:.14em;color:rgba(242,239,228,.72)}
+.brand b{display:flex;align-items:center;gap:6px;font-family:"Songti TC","Songti SC",serif;color:#F2EFE4;font-size:12px;letter-spacing:.1em}
+.brand b i{width:16px;height:16px;border-radius:4px;background:linear-gradient(135deg,#3A46C8,#8A4FE8);display:inline-block}
+.title{margin-top:22px;font-size:15px;color:rgba(242,239,228,.72)}.title b{color:#F2EFE4;font-weight:800}
+.amt{margin-top:4px;font-size:52px;font-weight:800;letter-spacing:-.01em;font-variant-numeric:tabular-nums;display:flex;align-items:baseline;gap:6px}.amt .cur{font-size:20px;font-weight:600;opacity:.85}
+.rows{margin-top:16px;display:flex;flex-direction:column;gap:7px;font-size:13px}.rows div{display:flex;justify-content:space-between;border-bottom:1px solid rgba(222,193,122,.28);padding-bottom:6px}.rows span:first-child{color:rgba(242,239,228,.72)}.rows span:last-child{color:#F2EFE4;font-weight:600}
+.split{margin-top:12px;background:rgba(0,0,0,.18);border-radius:12px;padding:9px 12px;font-size:12px;color:rgba(242,239,228,.72)}.split b{color:#F2EFE4}
+.foot{margin-top:auto;padding-top:16px;display:flex;justify-content:space-between;align-items:flex-end;font-size:12px}.foot b{display:block;font-size:13px}
+.stamp{font-family:"Songti TC","Songti SC",serif;font-size:15px;font-weight:800;color:#E0715F;border:2.5px solid #E0715F;border-radius:7px;padding:4px 9px;transform:rotate(-6deg);letter-spacing:.12em}.stamp.ok{color:#F2EFE4;border-color:#F2EFE4}
+.stack{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.btn{display:block;width:100%;padding:15px;border-radius:16px;border:0;font:inherit;font-size:16px;font-weight:800;text-align:center;cursor:pointer;text-decoration:none}
+.btn small{display:block;font-size:12px;font-weight:500;opacity:.8;margin-top:2px}
+.btn.pri{color:#fff;background:linear-gradient(135deg,var(--emerald-hi),var(--emerald));box-shadow:0 10px 24px rgba(14,107,78,.28)}
+.btn.sec{color:var(--emerald);background:var(--emerald-soft);border:1px solid var(--line)}
+.btn.ghost{color:var(--ink2);background:transparent;border:1px solid var(--line)}
+.btn[disabled]{opacity:.5}
+.reply{background:var(--card);border:1px solid var(--gold-line);border-radius:14px;padding:12px;font-size:13px;white-space:pre-wrap;word-break:break-all;margin-top:10px}
+.label{font-size:13px;color:var(--ink2);margin:16px 6px 6px;font-weight:600}
+.note{font-size:13px;color:var(--ink2);margin:14px 6px 0}
+.err{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;text-align:center}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="lang" id="lang"></div>
+<div id="app"></div>
+<script>
+const I18N = {
+  'zh-Hant': {brand:'代付帳 · 請款卡', asks:'請你還', reason:'事由', type:'類型', paid:'我先代付', to:'給', split:(t,n,s)=>`這是分攤：<b>${t} ÷ ${n} 人</b>，你的份 ${s}。`, cta:'點下方按鈕確認', ctaSub:(f)=>`確認後 ${f} 會收到回執`, pending:'待確認', ok:'已確認',
+    openApp:'在代付帳中開啟', openAppSub:'確認後自動記進你的帳本，並回傳回執', iconfirm:'我確認了（沒有 App 也可以）', idecline:'這筆不對，拒絕', getapp:'下載代付帳',
+    replyLabel:(f)=>`把這段回覆傳給 ${f}（已複製）`, copy:'複製', copied:'已複製', sendback:(f)=>`傳回給 ${f}`,
+    replyOk:(f,a)=>`我確認了：${f} 請款 ${a}`, replyNo:(f,a)=>`這筆我不認：${f} 請款 ${a}`, receipt:'回執：', gen:'— 由代付帳產生',
+    privacy:'這個連結裡的內容只存在連結本身與你們的對話中。代付帳沒有伺服器，不會經手或保存任何內容。',
+    ackTitle:'這是一張回執', ackBody:'請在代付帳中開啟，它會自動對回你傳出的請款。', bad:'這個連結無法讀取。', newer:'這個連結來自較新版本的代付帳。', date:'日期'},
+  'zh-Hans': {brand:'代付帳 · 请款卡', asks:'请你还', reason:'事由', type:'类型', paid:'我先代付', to:'给', split:(t,n,s)=>`这是分摊：<b>${t} ÷ ${n} 人</b>，你的份 ${s}。`, cta:'点下方按钮确认', ctaSub:(f)=>`确认后 ${f} 会收到回执`, pending:'待确认', ok:'已确认',
+    openApp:'在代付帳中打开', openAppSub:'确认后自动记进你的账本，并回传回执', iconfirm:'我确认了（没有 App 也可以）', idecline:'这笔不对，拒绝', getapp:'下载代付帳',
+    replyLabel:(f)=>`把这段回复传给 ${f}（已复制）`, copy:'复制', copied:'已复制', sendback:(f)=>`传回给 ${f}`,
+    replyOk:(f,a)=>`我确认了：${f} 请款 ${a}`, replyNo:(f,a)=>`这笔我不认：${f} 请款 ${a}`, receipt:'回执：', gen:'— 由代付帳产生',
+    privacy:'这个链接里的内容只存在链接本身与你们的对话中。代付帳没有服务器，不会经手或保存任何内容。',
+    ackTitle:'这是一张回执', ackBody:'请在代付帳中打开，它会自动对回你发出的请款。', bad:'这个链接无法读取。', newer:'这个链接来自较新版本的代付帳。', date:'日期'},
+  'en': {brand:'OWELY · PAYMENT REQUEST', asks:'asks you to pay back', reason:'For', type:'Type', paid:'They paid first', to:'To', split:(t,n,s)=>`Split: <b>${t} ÷ ${n} people</b>, your share ${s}.`, cta:'Tap a button below to confirm', ctaSub:(f)=>`${f} gets a receipt once you confirm`, pending:'PENDING', ok:'CONFIRMED',
+    openApp:'Open in Owely', openAppSub:'Confirm, record it in your ledger, and send a receipt back', iconfirm:'I confirm (no app needed)', idecline:'This is wrong, decline', getapp:'Get Owely',
+    replyLabel:(f)=>`Send this reply to ${f} (copied)`, copy:'Copy', copied:'Copied', sendback:(f)=>`Send back to ${f}`,
+    replyOk:(f,a)=>`Confirmed: ${f} requested ${a}`, replyNo:(f,a)=>`Declined: ${f} requested ${a}`, receipt:'Receipt: ', gen:'— generated by Owely',
+    privacy:'Everything in this link lives only in the link and your chat. Owely has no server and never sees or stores it.',
+    ackTitle:'This is a receipt', ackBody:'Open it in Owely; it will match the request you sent.', bad:"This link can't be read.", newer:'This link was made with a newer version of Owely.', date:'Date'},
+  'ja': {brand:'OWELY · 請求カード', asks:'さんからの請求', reason:'内容', type:'種類', paid:'相手が立て替え', to:'宛先', split:(t,n,s)=>`割り勘：<b>${t} ÷ ${n} 人</b>、あなたの分 ${s}。`, cta:'下のボタンで確認', ctaSub:(f)=>`確認すると ${f} に受領通知が届きます`, pending:'未確認', ok:'確認済',
+    openApp:'Owely で開く', openAppSub:'確認すると帳簿に記録され、受領通知が返されます', iconfirm:'確認しました（アプリ不要）', idecline:'違います、拒否', getapp:'Owely を入手',
+    replyLabel:(f)=>`この返信を ${f} に送ってください（コピー済み）`, copy:'コピー', copied:'コピーしました', sendback:(f)=>`${f} に返す`,
+    replyOk:(f,a)=>`確認しました：${f} からの請求 ${a}`, replyNo:(f,a)=>`承認できません：${f} からの請求 ${a}`, receipt:'受領通知：', gen:'— Owely により生成',
+    privacy:'このリンクの内容はリンク自体とお二人のチャットにのみ存在します。Owely にサーバーはなく、内容を保存しません。',
+    ackTitle:'これは受領通知です', ackBody:'Owely で開くと、送信した請求に自動で対応付けられます。', bad:'このリンクは読み込めません。', newer:'このリンクは新しいバージョンの Owely で作成されています。', date:'日付'},
+  'ko': {brand:'OWELY · 청구 카드', asks:'님의 상환 요청', reason:'사유', type:'유형', paid:'상대가 먼저 냄', to:'받는 사람', split:(t,n,s)=>`분담: <b>${t} ÷ ${n}명</b>, 당신 몫 ${s}.`, cta:'아래 버튼을 눌러 확인', ctaSub:(f)=>`확인하면 ${f}에게 수신 확인이 전달됩니다`, pending:'미확인', ok:'확인됨',
+    openApp:'Owely에서 열기', openAppSub:'확인하면 장부에 기록되고 수신 확인이 전달됩니다', iconfirm:'확인했습니다(앱 없이도 가능)', idecline:'잘못됨, 거절', getapp:'Owely 받기',
+    replyLabel:(f)=>`이 답장을 ${f}에게 보내세요(복사됨)`, copy:'복사', copied:'복사됨', sendback:(f)=>`${f}에게 보내기`,
+    replyOk:(f,a)=>`확인함: ${f}의 요청 ${a}`, replyNo:(f,a)=>`거절함: ${f}의 요청 ${a}`, receipt:'수신 확인: ', gen:'— Owely에서 생성',
+    privacy:'이 링크의 내용은 링크 자체와 두 분의 대화에만 존재합니다. Owely에는 서버가 없으며 내용을 보관하지 않습니다.',
+    ackTitle:'수신 확인입니다', ackBody:'Owely에서 열면 보낸 청구와 자동으로 연결됩니다.', bad:'이 링크를 읽을 수 없습니다.', newer:'이 링크는 최신 버전의 Owely로 만들어졌습니다.', date:'날짜'}
+};
+const SYM = {TWD:'NT$',CNY:'¥',USD:'$',HKD:'HK$',JPY:'¥',EUR:'€',GBP:'£',KRW:'₩',SGD:'S$',AUD:'A$',THB:'฿'};
+const APPSTORE = 'https://apps.apple.com/app/id6788934177';
+const LANDING = 'https://xun88888.github.io/owely-legal/r/';
+
+function pickLang(){ const n=(navigator.language||'zh-Hant').toLowerCase(); if(n.startsWith('zh')) return (n.includes('hans')||n.includes('cn')||n.includes('sg'))?'zh-Hans':'zh-Hant'; if(n.startsWith('ja')) return 'ja'; if(n.startsWith('ko')) return 'ko'; return 'en'; }
+let lang = pickLang();
+function b64urlDecode(s){ s=s.replace(/-/g,'+').replace(/_/g,'/'); while(s.length%4) s+='='; return decodeURIComponent(escape(atob(s))); }
+function b64urlEncode(s){ return btoa(unescape(encodeURIComponent(s))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,''); }
+function money(amt,cur){ const n=Number(amt); const dec=['TWD','JPY','KRW'].includes(cur)?0:2; return (SYM[cur]||cur+' ')+n.toLocaleString(undefined,{minimumFractionDigits:0,maximumFractionDigits:dec}); }
+function esc(s){ return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function fmtDate(iso){ const d=new Date(iso); return isNaN(d)?'':`${d.getFullYear()}/${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}`; }
+
+function parse(){ const h=location.hash.replace(/^#/,''); if(!h) return {error:'bad'}; try{ const o=JSON.parse(b64urlDecode(h)); if((o.v||1)>1) return {error:'newer'}; if(o.t==='req'||o.t==='ack') return {payload:o,raw:h}; return {error:'bad'}; }catch(e){ return {error:'bad'}; } }
+
+function render(){
+  const T=I18N[lang]; const app=document.getElementById('app'); const r=parse();
+  document.getElementById('lang').innerHTML = Object.keys(I18N).map(l=>`<button class="${l===lang?'on':''}" data-l="${l}">${{'zh-Hant':'繁中','zh-Hans':'简中',en:'EN',ja:'日本語',ko:'한국어'}[l]}</button>`).join('');
+  document.querySelectorAll('#lang button').forEach(b=>b.onclick=()=>{lang=b.dataset.l;render();});
+  if(r.error){ app.innerHTML=`<div class="err">${T[r.error]}</div><div class="stack"><a class="btn ghost" href="${APPSTORE}">${T.getapp}</a></div>`; return; }
+  const p=r.payload;
+  if(p.t==='ack'){ app.innerHTML=`<div class="err"><b>${T.ackTitle}</b><p class="note">${T.ackBody}</p></div><div class="stack"><a class="btn pri" href="owely://a#${r.raw}">${T.openApp}</a><a class="btn ghost" href="${APPSTORE}">${T.getapp}</a></div>`; return; }
+  const amt=money(p.amt,p.cur); const splitHtml=p.split?`<div class="split">${T.split(money(p.split.total,p.cur),p.split.n,amt)}</div>`:'';
+  const reason=[p.occ,p.note].filter(Boolean).join(' · ');
+  app.innerHTML=`
+  <div class="card" id="card">
+    <div class="brand"><b><i></i>${T.brand}</b><span>${fmtDate(p.date)}</span></div>
+    <div class="title"><b>${esc(p.from)}</b> ${T.asks}</div>
+    <div class="amt"><span class="cur">${SYM[p.cur]||p.cur}</span>${esc(money(p.amt,p.cur).replace(SYM[p.cur]||p.cur,''))}</div>
+    <div class="rows">${reason?`<div><span>${T.reason}</span><span>${esc(reason)}</span></div>`:''}<div><span>${T.type}</span><span>${T.paid}</span></div><div><span>${T.to}</span><span>${esc(p.to)}</span></div></div>
+    ${splitHtml}
+    <div class="foot"><div><b>${T.cta}</b>${T.ctaSub(esc(p.from))}</div><div class="stamp" id="stamp">${T.pending}</div></div>
+  </div>
+  <div class="stack">
+    <a class="btn pri" href="owely://r#${r.raw}">${T.openApp}<small>${T.openAppSub}</small></a>
+    <button class="btn sec" id="ok">${T.iconfirm}</button>
+    <button class="btn ghost" id="no">${T.idecline}</button>
+    <a class="btn ghost" href="${APPSTORE}">${T.getapp}</a>
+  </div>
+  <div id="reply" class="hidden"><div class="label" id="replyLabel"></div><div class="reply" id="replyText"></div><div class="stack"><button class="btn pri" id="share"></button><button class="btn sec" id="copy">${T.copy}</button></div></div>
+  <p class="note">${T.privacy}</p>`;
+  const ack=(ok)=>{
+    const a={v:1,t:'ack',id:p.id,s:ok?'ok':'no',at:new Date().toISOString().replace(/\.\d{3}Z$/,'Z'),by:p.to||''};
+    const raw=b64urlEncode(JSON.stringify(a));
+    const text=`${ok?T.replyOk(p.from,amt):T.replyNo(p.from,amt)}\n${T.receipt}${LANDING}#${raw}\n${T.gen}`;
+    document.getElementById('stamp').textContent=ok?T.ok:T.pending; document.getElementById('stamp').className='stamp'+(ok?' ok':'');
+    document.getElementById('reply').classList.remove('hidden');
+    document.getElementById('replyLabel').textContent=T.replyLabel(p.from);
+    document.getElementById('replyText').textContent=text;
+    document.getElementById('ok').disabled=true; document.getElementById('no').disabled=true;
+    const sh=document.getElementById('share'); sh.textContent=T.sendback(p.from);
+    sh.onclick=()=>{ if(navigator.share){ navigator.share({text}).catch(()=>{}); } else { copyText(text); } };
+    document.getElementById('copy').onclick=()=>copyText(text);
+    copyText(text,true);
+  };
+  document.getElementById('ok').onclick=()=>ack(true);
+  document.getElementById('no').onclick=()=>ack(false);
+}
+function copyText(t,quiet){ const done=()=>{ if(quiet) return; const b=document.getElementById('copy'); if(b){ b.textContent=I18N[lang].copied; } };
+  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(done).catch(()=>{}); } else { const ta=document.createElement('textarea'); ta.value=t; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');}catch(e){} ta.remove(); done(); } }
+window.addEventListener('hashchange',render); render();
+</script>
+</body>
+</html>
