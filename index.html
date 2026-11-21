@@ -42,90 +42,120 @@
   </div>
 
   <section data-lang="zh-Hant" class="on">
-    <p class="hero">一句話版本：代付帳不收集你的任何資料。所有帳目只存在你自己的裝置與你自己的 iCloud 上。</p>
+    <p class="hero">一句話版本：你的帳目只存在你自己的裝置與你自己的 iCloud，我們看不到。我們只收匿名的使用統計，而且可以關掉。</p>
     <div class="card">
       <h2>我們收集什麼</h2>
-      <p>什麼都不收集。代付帳沒有伺服器、沒有帳號系統、沒有分析追蹤、沒有廣告 SDK。你記錄的聯絡人、交易、照片憑證等所有資料，只儲存在你裝置的本機資料庫，以及（若你的裝置已登入 iCloud）由 Apple 以你的身分保管的 iCloud 私人資料庫中，永遠不會傳送給我們或任何第三方。</p>
+      <p>你的帳目、聯絡人、照片憑證我們都收不到也看不到。代付帳沒有自己的伺服器、沒有帳號系統、沒有廣告 SDK、沒有第三方分析工具。你記錄的資料只儲存在你裝置的本機資料庫，以及（若你的裝置已登入 iCloud）由 Apple 以你的身分保管的 iCloud 資料庫中。唯一的例外是下方說明的匿名使用統計。</p>
       <h2>照片、日曆與 Face ID</h2>
       <p>App 只在你主動使用對應功能時，向 iOS 申請相簿（附加憑證照片）、日曆（建立到期提醒）與 Face ID（應用鎖）權限。這些操作全部在裝置本機完成；收據金額辨識使用 Apple 裝置端文字辨識，圖片不會離開你的裝置。</p>
       <h2>iCloud 同步</h2>
       <p>1.2 版起，若你的裝置已登入 iCloud，帳目會透過 Apple 的 CloudKit 私人資料庫在你自己的裝置之間同步。這些資料存放在你的 iCloud 帳號底下、計入你的 iCloud 空間，由 Apple 加密保管；我們沒有伺服器，也無法讀取。你可以在 iOS「設定 → Apple 帳號 → iCloud」關閉代付帳的同步，資料仍會完整保留在裝置上。</p>
+      <h2>聯絡人連線</h2>
+      <p>2.1 版起，你可以邀請另一位使用者與你的某位聯絡人「連線」。連線後，你之後為這位聯絡人記的帳（類型、金額、幣別、日期、事由、場景名稱）以及你在 App 裡設定的顯示名稱，會存進一個只有你們兩人能存取的 iCloud 共享區。這個共享區放在發起邀請那一方的 iCloud 帳號底下，由 Apple 保管，我們無法讀取。連線之前的帳目、其他聯絡人的帳目、照片憑證都不會放進去。對方看得到 Apple 為這個 App 產生的匿名帳號代碼，看不到你的 Apple ID、電話或電子郵件。邀請連結裡含有你的顯示名稱與共享連結，經由你自己選擇的通訊軟體傳送；邀請網頁不會把這些內容傳給任何伺服器。任一方都可以隨時解除連線，已經記進各自帳本的資料會保留在各自的裝置上。</p>
+      <h2>通知</h2>
+      <p>若你開啟連線通知，對方記帳或加入你的邀請時，Apple 的 iCloud 會直接推送一則通知到你的裝置。通知不含金額、事由或對方姓名。通知由 Apple 傳送，我們沒有伺服器參與，也不會取得你裝置的推播識別碼。你可以在 App 的設定或 iOS「設定 → 通知」關閉。</p>
+      <h2>匿名使用統計</h2>
+      <p>2.1 版起，App 每天最多一次，向 Apple CloudKit 寫入一筆匿名紀錄：日期、App 版本、語言與地區、是否為 Pro、聯絡人數與記帳筆數的大致級距、連線與邀請的次數。紀錄不含姓名、聯絡人、金額、事由、照片或裝置識別碼。Apple 會為每筆紀錄附上一個本 App 專用的匿名帳號代碼，我們無法由它得知你是誰。這些統計只用來了解有多少人在使用、哪些功能有用，不用於廣告或追蹤，也不提供給第三方。第一次開啟 2.1 版時，App 會先顯示這項說明與開關；在你按下「開始使用」之前不會傳送任何統計。之後也可以隨時在「設定 → 匿名使用統計」關閉。</p>
       <h2>付費</h2>
       <p>Pro 為一次性買斷，購買與退款皆由 Apple App Store 處理，我們無法取得你的付款資訊。</p>
       <h2>資料刪除</h2>
-      <p>刪除 App 即刪除全部資料。我們沒有你的任何副本。 若曾開啟 iCloud 同步，另可在 iOS「設定 → Apple 帳號 → iCloud → 管理帳號儲存空間」刪除代付帳的 iCloud 資料。</p>
+      <p>刪除 App 即刪除全部資料。我們沒有你的任何副本。 若曾開啟 iCloud 同步，另可在 iOS「設定 → Apple 帳號 → iCloud → 管理帳號儲存空間」刪除代付帳的 iCloud 資料。 連線的共享資料：解除連線後，發起邀請的一方可在同一處刪除；加入的一方解除連線後即無法再存取。</p>
       <h2>聯絡我們</h2>
       <p>對本政策有任何疑問：<a href="mailto:xunstudio.support@gmail.com">xunstudio.support@gmail.com</a></p>
     </div>
   </section>
 
   <section data-lang="zh-Hans">
-    <p class="hero">一句话版本：代付帳不收集你的任何数据。所有账目只存在你自己的设备与你自己的 iCloud 上。</p>
+    <p class="hero">一句话版本：你的账目只存在你自己的设备与你自己的 iCloud，我们看不到。我们只收匿名的使用统计，而且可以关掉。</p>
     <div class="card">
       <h2>我们收集什么</h2>
-      <p>什么都不收集。代付帳没有服务器、没有账号系统、没有分析追踪、没有广告 SDK。你记录的联系人、交易、照片凭证等所有数据，只存储在你设备的本地数据库，以及（若你的设备已登录 iCloud）由 Apple 以你的身份保管的 iCloud 私人数据库中，永远不会发送给我们或任何第三方。</p>
+      <p>你的账目、联系人、照片凭证我们都收不到也看不到。代付帳没有自己的服务器、没有账号系统、没有广告 SDK、没有第三方分析工具。你记录的数据只存储在你设备的本机数据库，以及（若你的设备已登入 iCloud）由 Apple 以你的身份保管的 iCloud 数据库中。唯一的例外是下方说明的匿名使用统计。</p>
       <h2>照片、日历与 Face ID</h2>
       <p>App 只在你主动使用对应功能时，向 iOS 申请相册（附加凭证照片）、日历（创建到期提醒）与 Face ID（应用锁）权限。这些操作全部在设备本地完成；收据金额识别使用 Apple 设备端文字识别，图片不会离开你的设备。</p>
       <h2>iCloud 同步</h2>
       <p>1.2 版起，若你的设备已登录 iCloud，账目会通过 Apple 的 CloudKit 私人数据库在你自己的设备之间同步。这些数据存放在你的 iCloud 账户下、计入你的 iCloud 空间，由 Apple 加密保管；我们没有服务器，也无法读取。你可以在 iOS「设置 → Apple 账户 → iCloud」关闭代付帳的同步，数据仍会完整保留在设备上。</p>
+      <h2>联系人连线</h2>
+      <p>2.1 版起，你可以邀请另一位用户与你的某位联系人「连线」。连线后，你之后为这位联系人记的账（类型、金额、币别、日期、事由、场景名称）以及你在 App 里设置的显示名称，会存进一个只有你们两人能访问的 iCloud 共享区。这个共享区放在发起邀请那一方的 iCloud 账户底下，由 Apple 保管，我们无法读取。连线之前的账目、其他联系人的账目、照片凭证都不会放进去。对方看得到 Apple 为这个 App 生成的匿名账户代码，看不到你的 Apple ID、电话或电子邮件。邀请链接里含有你的显示名称与共享链接，经由你自己选择的通讯软件发送；邀请网页不会把这些内容传给任何服务器。任一方都可以随时解除连线，已经记进各自账本的数据会保留在各自的设备上。</p>
+      <h2>通知</h2>
+      <p>若你开启连线通知，对方记账或加入你的邀请时，Apple 的 iCloud 会直接推送一则通知到你的设备。通知不含金额、事由或对方姓名。通知由 Apple 发送，我们没有服务器参与，也不会取得你设备的推送标识符。你可以在 App 的设置或 iOS「设置 → 通知」关闭。</p>
+      <h2>匿名使用统计</h2>
+      <p>2.1 版起，App 每天最多一次，向 Apple CloudKit 写入一条匿名记录：日期、App 版本、语言与地区、是否为 Pro、联系人数与记账笔数的大致区间、连线与邀请的次数。记录不含姓名、联系人、金额、事由、照片或设备标识符。Apple 会为每条记录附上一个本 App 专用的匿名账户代码，我们无法由它得知你是谁。这些统计只用来了解有多少人在使用、哪些功能有用，不用于广告或追踪，也不提供给第三方。首次打开 2.1 版时，App 会先显示这项说明与开关；在你按下「开始使用」之前不会传送任何统计。之后也可以随时在「设置 → 匿名使用统计」关闭。</p>
       <h2>付费</h2>
       <p>Pro 为一次性买断，购买与退款均由 Apple App Store 处理，我们无法获取你的付款信息。</p>
       <h2>数据删除</h2>
-      <p>删除 App 即删除全部数据。我们没有你的任何副本。 若曾开启 iCloud 同步，另可在 iOS「设置 → Apple 账户 → iCloud → 管理账户储存空间」删除代付帳的 iCloud 数据。</p>
+      <p>删除 App 即删除全部数据。我们没有你的任何副本。 若曾开启 iCloud 同步，另可在 iOS「设置 → Apple 账户 → iCloud → 管理账户储存空间」删除代付帳的 iCloud 数据。 连线的共享数据：解除连线后，发起邀请的一方可在同一处删除；加入的一方解除连线后即无法再访问。</p>
       <h2>联系我们</h2>
       <p>对本政策有任何疑问：<a href="mailto:xunstudio.support@gmail.com">xunstudio.support@gmail.com</a></p>
     </div>
   </section>
 
   <section data-lang="en">
-    <p class="hero">The one-line version: Owely collects no data about you. Everything you record stays on your own device and in your own iCloud.</p>
+    <p class="hero">The one-line version: your ledger lives only on your own device and in your own iCloud, and we cannot see it. We collect anonymous usage statistics only, and you can turn them off.</p>
     <div class="card">
       <h2>What we collect</h2>
-      <p>Nothing. Owely has no server, no accounts, no analytics, and no ad SDKs. Your contacts, transactions, and receipt photos are stored only in the local database on your device and, if your device is signed in to iCloud, in your own iCloud private database that Apple keeps under your account — and are never sent to us or to any third party.</p>
+      <p>We cannot receive or see your ledger, contacts or receipt photos. Owely has no server of its own, no account system, no advertising SDK and no third-party analytics. What you record is stored only in the local database on your device and, if your device is signed in to iCloud, in iCloud databases kept by Apple under your identity. The only exception is the anonymous usage statistics described below.</p>
       <h2>Photos, Calendar, and Face ID</h2>
       <p>The app requests Photo Library access (to attach receipts), Calendar access (to create due-date reminders), and Face ID (for the app lock) only when you actively use those features. Everything runs on-device; receipt amount recognition uses Apple's on-device text recognition, and images never leave your device.</p>
       <h2>iCloud sync</h2>
       <p>Starting with version 1.2, if your device is signed in to iCloud, your ledger syncs between your own devices through Apple's CloudKit private database. That data lives under your iCloud account, counts toward your iCloud storage, and is encrypted and held by Apple; we have no server and cannot read it. You can turn off sync for Owely in iOS Settings → Apple Account → iCloud; your data stays intact on the device.</p>
+      <h2>Linking with a contact</h2>
+      <p>Starting with version 2.1, you can invite another Owely user to link with one of your contacts. Once linked, entries you record for that contact from then on (type, amount, currency, date, note, event name) and the display name you set in the app are stored in an iCloud shared zone that only the two of you can access. The zone lives under the iCloud account of the person who sent the invite and is kept by Apple; we cannot read it. Entries from before linking, entries for other contacts, and receipt photos are never placed there. The other person can see an anonymous, app-specific account code generated by Apple — not your Apple ID, phone number or email. The invite link contains your display name and the share link, and travels through the messaging app you choose; the invite web page does not send these to any server. Either side can unlink at any time; whatever is already in each person’s ledger stays on their own device.</p>
+      <h2>Notifications</h2>
+      <p>If you turn on link notifications, Apple’s iCloud sends a notification straight to your device when the other person records an entry or joins your invite. Notifications contain no amounts, notes or names. They are delivered by Apple; no server of ours is involved and we never receive your device’s push token. You can turn them off in the app’s Settings or in iOS Settings → Notifications.</p>
+      <h2>Anonymous usage statistics</h2>
+      <p>Starting with version 2.1, at most once a day the app writes one anonymous record to Apple CloudKit: the date, app version, language and region, whether Pro is unlocked, rough ranges for your number of contacts and entries, and counts of links and invitations. It never includes names, contacts, amounts, notes, photos or device identifiers. Apple attaches an anonymous, app-specific account code to each record; we cannot tell who you are from it. We use these statistics only to understand how many people use Owely and which features help. They are not used for advertising or tracking and are not shared with third parties. The first time you open version 2.1, the app shows this explanation with a switch; nothing is sent before you tap “Get Started”. You can also turn it off anytime in Settings → Anonymous Usage Statistics.</p>
       <h2>Purchases</h2>
       <p>Pro is a one-time purchase handled entirely by the Apple App Store. We never see your payment information.</p>
       <h2>Deleting your data</h2>
-      <p>Deleting the app deletes all of your data. We hold no copies. If you used iCloud sync, you can also delete Owely's iCloud data in iOS Settings → Apple Account → iCloud → Manage Account Storage.</p>
+      <p>Deleting the app deletes all of your data. We hold no copies. If you used iCloud sync, you can also delete Owely's iCloud data in iOS Settings → Apple Account → iCloud → Manage Account Storage. For linked contacts: after unlinking, the person who sent the invite can delete the shared data in the same place; the person who joined loses access as soon as they unlink.</p>
       <h2>Contact</h2>
       <p>Questions about this policy: <a href="mailto:xunstudio.support@gmail.com">xunstudio.support@gmail.com</a></p>
     </div>
   </section>
 
   <section data-lang="ja">
-    <p class="hero">ひとことで：Owely（代付帳）はあなたのデータを一切収集しません。記録はすべてあなたの端末と、あなた自身の iCloud の中だけに保存されます。</p>
+    <p class="hero">ひとことで：帳簿はあなたの端末とあなた自身の iCloud にのみ保存され、当方からは見えません。収集するのは匿名の利用統計だけで、オフにできます。</p>
     <div class="card">
       <h2>収集する情報</h2>
-      <p>何も収集しません。Owely にはサーバーもアカウントも解析トラッキングも広告 SDK もありません。連絡先・取引・レシート写真などの記録はすべて端末内のローカルデータベースと（端末が iCloud にサインインしている場合）Apple があなたのアカウントで管理する iCloud プライベートデータベースにのみ保存され、当方や第三者に送信されることはありません。</p>
+      <p>帳簿、連絡先、レシート写真を当方が受け取ることも見ることもありません。Owely には自社サーバー、アカウント制度、広告 SDK、第三者の解析ツールがありません。記録したデータは端末内のデータベースと、（iCloud にサインインしている場合）Apple があなたの名義で保管する iCloud データベースにのみ保存されます。唯一の例外は、下記の匿名の利用統計です。</p>
       <h2>写真・カレンダー・Face ID</h2>
       <p>写真ライブラリ（レシート添付）、カレンダー（期日リマインダー作成）、Face ID（アプリロック）の権限は、該当機能を使うときにのみ iOS を通じて求められます。処理はすべて端末内で完結し、レシートの金額認識も Apple のオンデバイス文字認識を使用します。画像が端末の外へ出ることはありません。</p>
       <h2>iCloud 同期</h2>
       <p>バージョン 1.2 以降、端末が iCloud にサインインしている場合、記録は Apple の CloudKit プライベートデータベースを通じてあなた自身の端末間で同期されます。データはあなたの iCloud アカウント配下に保存され、iCloud の容量に計上され、Apple によって暗号化・保管されます。当方にはサーバーがなく、内容を読むこともできません。同期は iOS の「設定 → Apple アカウント → iCloud」でオフにできます。その場合もデータは端末内にそのまま残ります。</p>
+      <h2>連絡先との連携</h2>
+      <p>バージョン 2.1 以降、ほかの Owely ユーザーを招待して、あなたの連絡先の 1 人と「連携」できます。連携後にその連絡先について記録した内容（種類、金額、通貨、日付、メモ、シーン名）と、アプリで設定した表示名は、お二人だけがアクセスできる iCloud の共有ゾーンに保存されます。共有ゾーンは招待した側の iCloud アカウントの下に置かれ、Apple が保管します。当方は読み取れません。連携前の記録、ほかの連絡先の記録、レシート写真が置かれることはありません。相手に見えるのは Apple がこのアプリ用に生成した匿名のアカウントコードで、Apple ID・電話番号・メールアドレスは見えません。招待リンクにはあなたの表示名と共有リンクが含まれ、あなたが選んだメッセージアプリで送られます。招待ページがこれらをサーバーに送信することはありません。どちらからでもいつでも連携を解除でき、すでにそれぞれの帳簿に記録された内容は各自の端末に残ります。</p>
+      <h2>通知</h2>
+      <p>連携の通知をオンにすると、相手が記録したとき、または招待に参加したときに、Apple の iCloud から端末へ直接通知が届きます。通知に金額、メモ、名前は含まれません。通知は Apple が配信し、当方のサーバーは関与せず、端末のプッシュトークンを当方が受け取ることもありません。アプリの設定、または iOS の「設定 → 通知」でオフにできます。</p>
+      <h2>匿名の利用統計</h2>
+      <p>バージョン 2.1 以降、アプリは 1 日に最大 1 回、Apple CloudKit に匿名の記録を 1 件書き込みます：日付、アプリのバージョン、言語と地域、Pro かどうか、連絡先数と記録件数のおおよその範囲、連携と招待の回数。名前、連絡先、金額、内容、写真、端末識別子は含みません。Apple が各記録にこのアプリ専用の匿名アカウントコードを付与しますが、当方はそこからあなたを特定できません。統計は利用者数と役立つ機能の把握にのみ使い、広告やトラッキングには使用せず、第三者にも提供しません。バージョン 2.1 を初めて開いたときに、この説明とスイッチを表示します。「はじめる」をタップするまで統計は送信されません。その後も「設定 → 匿名の利用統計」でいつでもオフにできます。</p>
       <h2>購入について</h2>
       <p>Pro は買い切りで、購入・返金はすべて Apple App Store が処理します。当方が支払い情報を知ることはありません。</p>
       <h2>データの削除</h2>
-      <p>アプリを削除すると、すべてのデータが削除されます。当方はコピーを一切保持していません。 iCloud 同期を使っていた場合は、iOS の「設定 → Apple アカウント → iCloud → アカウントのストレージを管理」から Owely の iCloud データも削除できます。</p>
+      <p>アプリを削除すると、すべてのデータが削除されます。当方はコピーを一切保持していません。 iCloud 同期を使っていた場合は、iOS の「設定 → Apple アカウント → iCloud → アカウントのストレージを管理」から Owely の iCloud データも削除できます。 連携の共有データ：連携を解除したあと、招待した側は同じ場所で削除できます。参加した側は、解除した時点でアクセスできなくなります。</p>
       <h2>お問い合わせ</h2>
       <p>本ポリシーへのご質問：<a href="mailto:xunstudio.support@gmail.com">xunstudio.support@gmail.com</a></p>
     </div>
   </section>
 
   <section data-lang="ko">
-    <p class="hero">한 줄 요약: Owely(代付帳)는 어떤 데이터도 수집하지 않습니다. 모든 기록은 사용자 기기와 본인 iCloud에만 저장됩니다.</p>
+    <p class="hero">한 줄 요약: 장부는 사용자 기기와 본인 iCloud에만 저장되며 당사는 볼 수 없습니다. 익명 사용 통계만 수집하며 끌 수 있습니다.</p>
     <div class="card">
       <h2>수집하는 정보</h2>
-      <p>아무것도 수집하지 않습니다. 서버, 계정, 분석 추적, 광고 SDK가 전혀 없습니다. 연락처·거래·영수증 사진 등 모든 기록은 기기의 로컬 데이터베이스와(기기가 iCloud에 로그인된 경우) Apple이 사용자 계정으로 관리하는 iCloud 비공개 데이터베이스에만 저장되며, 당사나 제3자에게 전송되지 않습니다.</p>
+      <p>장부, 연락처, 영수증 사진은 당사가 받을 수도 볼 수도 없습니다. Owely에는 자체 서버, 계정 시스템, 광고 SDK, 제3자 분석 도구가 없습니다. 기록한 데이터는 기기의 로컬 데이터베이스와, (기기가 iCloud에 로그인된 경우) Apple이 사용자 명의로 보관하는 iCloud 데이터베이스에만 저장됩니다. 유일한 예외는 아래에 설명한 익명 사용 통계입니다.</p>
       <h2>사진, 캘린더, Face ID</h2>
       <p>사진 보관함(영수증 첨부), 캘린더(마감 알림 생성), Face ID(앱 잠금) 권한은 해당 기능을 직접 사용할 때만 iOS를 통해 요청됩니다. 모든 처리는 기기 안에서 이루어지며, 영수증 금액 인식도 Apple의 온디바이스 텍스트 인식을 사용합니다. 이미지는 기기 밖으로 나가지 않습니다.</p>
       <h2>iCloud 동기화</h2>
       <p>1.2 버전부터 기기가 iCloud에 로그인되어 있으면 장부가 Apple의 CloudKit 비공개 데이터베이스를 통해 사용자 본인의 기기 간에 동기화됩니다. 이 데이터는 사용자의 iCloud 계정 아래에 저장되고 iCloud 저장 공간에 포함되며 Apple이 암호화해 보관합니다. 당사에는 서버가 없으며 내용을 읽을 수 없습니다. iOS 설정 → Apple 계정 → iCloud에서 Owely의 동기화를 끌 수 있으며, 데이터는 기기에 그대로 남습니다.</p>
+      <h2>연락처 연결</h2>
+      <p>2.1 버전부터 다른 Owely 사용자를 초대해 내 연락처 한 명과 ‘연결’할 수 있습니다. 연결한 뒤 그 연락처에 대해 기록하는 내역(유형, 금액, 통화, 날짜, 메모, 장면 이름)과 앱에서 설정한 표시 이름은 두 사람만 접근할 수 있는 iCloud 공유 영역에 저장됩니다. 공유 영역은 초대한 쪽의 iCloud 계정 아래에 있으며 Apple이 보관합니다. 당사는 읽을 수 없습니다. 연결 이전의 내역, 다른 연락처의 내역, 영수증 사진은 저장되지 않습니다. 상대에게는 Apple이 이 앱용으로 생성한 익명 계정 코드만 보이며 Apple ID, 전화번호, 이메일은 보이지 않습니다. 초대 링크에는 표시 이름과 공유 링크가 들어 있으며 사용자가 선택한 메신저로 전달됩니다. 초대 웹페이지는 이 내용을 어떤 서버에도 보내지 않습니다. 어느 쪽이든 언제든지 연결을 해제할 수 있고, 이미 각자의 장부에 기록된 내용은 각자의 기기에 남습니다.</p>
+      <h2>알림</h2>
+      <p>연결 알림을 켜면 상대가 내역을 기록하거나 초대에 참여할 때 Apple의 iCloud가 기기로 직접 알림을 보냅니다. 알림에는 금액, 메모, 이름이 포함되지 않습니다. 알림은 Apple이 전송하며 당사 서버는 관여하지 않고 기기의 푸시 토큰도 당사가 받지 않습니다. 앱 설정 또는 iOS ‘설정 → 알림’에서 끌 수 있습니다.</p>
+      <h2>익명 사용 통계</h2>
+      <p>2.1 버전부터 앱은 하루 최대 한 번 Apple CloudKit에 익명 기록 한 건을 씁니다: 날짜, 앱 버전, 언어와 지역, Pro 여부, 연락처 수와 기록 건수의 대략적인 구간, 연결 및 초대 횟수. 이름, 연락처, 금액, 사유, 사진, 기기 식별자는 포함하지 않습니다. Apple이 각 기록에 이 앱 전용 익명 계정 코드를 붙이지만 당사는 이를 통해 사용자가 누구인지 알 수 없습니다. 통계는 이용자 수와 유용한 기능을 파악하는 데만 쓰이며 광고나 추적에 쓰지 않고 제3자에게 제공하지 않습니다. 버전 2.1을 처음 열면 이 안내와 스위치를 먼저 보여 드리며, ‘시작하기’를 누르기 전에는 통계를 전송하지 않습니다. 이후에도 ‘설정 → 익명 사용 통계’에서 언제든 끌 수 있습니다.</p>
       <h2>구매</h2>
       <p>Pro는 일회성 구매이며 결제와 환불은 모두 Apple App Store가 처리합니다. 당사는 결제 정보를 볼 수 없습니다.</p>
       <h2>데이터 삭제</h2>
-      <p>앱을 삭제하면 모든 데이터가 삭제됩니다. 당사는 어떤 사본도 보관하지 않습니다. iCloud 동기화를 사용했다면 iOS 설정 → Apple 계정 → iCloud → 계정 저장 공간 관리에서 Owely의 iCloud 데이터도 삭제할 수 있습니다.</p>
+      <p>앱을 삭제하면 모든 데이터가 삭제됩니다. 당사는 어떤 사본도 보관하지 않습니다. iCloud 동기화를 사용했다면 iOS 설정 → Apple 계정 → iCloud → 계정 저장 공간 관리에서 Owely의 iCloud 데이터도 삭제할 수 있습니다. 연결 공유 데이터: 연결을 해제한 뒤 초대한 쪽은 같은 위치에서 삭제할 수 있고, 참여한 쪽은 해제하는 즉시 접근할 수 없게 됩니다.</p>
       <h2>문의</h2>
       <p>본 방침에 대한 문의: <a href="mailto:xunstudio.support@gmail.com">xunstudio.support@gmail.com</a></p>
     </div>
