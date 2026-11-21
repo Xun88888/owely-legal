@@ -12,7 +12,7 @@
   t/v 借用請款卡的形狀：舊版 2.0 會因此顯示「請先更新 App」而不是「連結無法讀取」（2026-11-21 真機實測後改）。
   為什麼要這一頁：直接傳 iCloud 分享連結，沒裝 App 的人只會看到通用的 iCloud 登入頁。
   「在 Owely 開啟」＝ owely://l#<同一份 payload>，App 內完成加入。
-  沒裝 App 時按「開啟」不會有任何反應（LINE 內建瀏覽器只跳一個允許框，按了也沒事）→ 2.5 秒後頁面還在前景就顯示提示，
+  沒裝 App 時按「開啟」不會有任何反應（LINE 內建瀏覽器只跳一個允許框，按了也沒事）→ 按下 0.8 秒後就顯示提示，
   並把「到 App Store 下載」變成主要按鈕（2026-11-21 真機實測後加）。不自動跳商店：已安裝的人可能只是慢慢按允許。
 -->
 <style>
@@ -87,6 +87,8 @@ const I18N = {
 };
 // 活動代碼 ct=link-invite：在 App Store Connect「App 分析 → 來源 → 活動」看這個頁面帶來的下載（要搭配 pt=供應商代碼才會被統計）。
 const APPSTORE = 'https://apps.apple.com/app/id6788934177?ct=link-invite';
+// 頁尾版本記號：真機測試時用來分辨瀏覽器是不是還在用快取的舊頁（GitHub Pages 快取 10 分鐘）。
+const BUILD = 'L3';
 const PRIVACY = 'https://xun88888.github.io/owely-legal/';
 
 function pickLang(){ const n=(navigator.language||'zh-Hant').toLowerCase(); if(n.startsWith('zh')) return (n.includes('hans')||n.includes('cn')||n.includes('sg'))?'zh-Hans':'zh-Hant'; if(n.startsWith('ja')) return 'ja'; if(n.startsWith('ko')) return 'ko'; return 'en'; }
@@ -114,21 +116,24 @@ function render(){
   </div>
   <div class="stack">
     <a class="btn ${missed?'sec':'pri'}" id="open" href="owely://l#${r.raw}">${T.open}<small>${T.openSub}</small></a>
-    ${missed?`<div class="miss" id="miss" role="status">${T.miss}</div>`:''}
+    <div class="miss" id="miss" role="status"${missed?'':' hidden'}>${T.miss}</div>
     <a class="btn ${missed?'pri':'sec'}" id="get" href="${APPSTORE}">${T.get}<small>${T.getSub}</small></a>
   </div>
   <p class="note" style="margin-top:10px;text-align:center">${T.upd}</p>
   <div class="steps"><div><i>1</i><span>${T.s1}</span></div><div><i>2</i><span>${T.s2}</span></div><div><i>3</i><span>${name?T.s3(esc(name)):T.s3Anon}</span></div></div>
-  <p class="note">${T.note} <a href="${PRIVACY}">${T.privacy}</a></p>`;
-  document.getElementById('open').addEventListener('click',()=>{
-    left=false; clearTimeout(missTimer);
-    missTimer=setTimeout(()=>{ if(left||document.visibilityState!=='visible'||missed) return; missed=true; render(); const m=document.getElementById('miss'); if(m&&m.scrollIntoView) m.scrollIntoView({block:'center',behavior:'smooth'}); },2500);
-  });
+  <p class="note">${T.note} <a href="${PRIVACY}">${T.privacy}</a></p>
+  <p class="note" style="text-align:center;opacity:.7">${BUILD}</p>`;
+  document.getElementById('open').addEventListener('click',()=>{ if(missed) return; clearTimeout(missTimer); missTimer=setTimeout(showMiss,800); });
 }
-// 按了「開啟」之後頁面有沒有離開前景：離開＝App 開起來了，不顯示提示。
-let missed=false, left=false, missTimer=0;
-document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden') left=true; });
-window.addEventListener('pagehide',()=>{ left=true; });
+// 按了「開啟」0.8 秒後一律顯示提示，不看頁面有沒有離開前景：App 有開起來的人已經離開這頁，看不到；
+// 沒開起來的人一定看得到。不重繪整頁（重繪會換掉正在被點的連結），只切換樣式。
+let missed=false, missTimer=0;
+function showMiss(){
+  missed=true; const o=document.getElementById('open'), g=document.getElementById('get'), m=document.getElementById('miss');
+  if(!o||!g||!m) return;
+  o.className='btn sec'; g.className='btn pri'; m.hidden=false;
+  if(m.scrollIntoView) m.scrollIntoView({block:'center',behavior:'smooth'});
+}
 window.addEventListener('hashchange',render);
 render();
 </script>
